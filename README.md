@@ -1,67 +1,54 @@
-# Kick75 Customizer + Codex Command Center
+# Kick75 Codex Command Center
 
-A public, local-first project for understanding, restoring, and extending a NuPhy Kick75 keyboard.
+NuPhy Kick75 QMK firmware and macOS runtime integration for the Codex Command Center.
 
-The repository has two connected lanes:
+This repository is the canonical home for the verified Kick75 Codex firmware, Codex and reasoning layers, KITT and task-status RGB behavior, Raw HID status delivery, macOS Status and Sidebar helpers, recovery assets, and future keyboard-side work. The separate [kick75-customizer-app](https://github.com/NovaHelpsUnMe/kick75-customizer-app) repository owns VIA definition tooling, profile parsing, keyboard visualization, and the customizer UI.
 
-1. **Kick75 Customizer** — the existing Vite/React/TypeScript app for inspecting the real Kick75 VIA definition.
-2. **Codex Command Center** — the verified QMK firmware and macOS helpers that turn the Kick75 into a physical controller for Codex tasks.
+## Stable v1.0 baseline
 
-## Codex Command Center v1.0
-
-The current hardware build includes:
+The migrated `v1.0.0` release preserves the known-good public baseline:
 
 - a red KITT scanner while Codex mode is active;
-- F1–F4 navigation for the first four pinned Codex tasks;
-- live F1–F4 status colors for assigned, working, completed, attention, and error states;
-- F5–F12 shortcuts for common Codex actions;
-- a knob that scrolls the Codex conversation sidebar;
-- knob-press reasoning control;
+- F1–F4 navigation and live status colors for the first four pinned Codex tasks;
+- F5–F12 Codex shortcuts;
+- sidebar and reasoning knob modes;
 - isolated indicator lighting for Codex controls;
 - normal keyboard behavior and saved VIA settings outside Codex mode.
 
-Start with the [complete feature report](docs/codex-command-center.md) or the [recovery guide](docs/recovery.md). The verified source snapshot is under [firmware](firmware/README.md), and the local status/sidebar bridge is under [helpers/macos](helpers/macos/README.md).
+Live task-status delivery requires wired USB. Normal keyboard input remains available outside Codex mode through the keyboard's supported connection modes.
 
-## Current customizer app
-
-- Frontend: Vite + React + TypeScript
-- Data model: board-definition parser plus a narrow imported-profile parser
-- Screens: Overview, Keymap, Lighting, Import/Export
-- Tests: Kick75 definition parsing and supported/unsupported profile imports
-- Limitation: profile import currently requires explicit layer arrays aligned to the normalized Kick75 key order
-
-### Local app commands
-
-```bash
-npm install
-npm run dev
-npm run test
-npm run build
-```
+Start with the [complete feature report](docs/codex-command-center.md) or the [recovery guide](docs/recovery.md). The verified source snapshot is under [firmware](firmware/README.md), the local status/sidebar bridge is under [helpers/macos](helpers/macos/README.md), and the repository split is documented in [migration provenance](docs/migration-provenance.md).
 
 ## Repository layout
 
 ```text
 .
-├── docs/                 # durable feature, recovery, and roadmap records
+├── docs/                 # feature, recovery, roadmap, and provenance records
 ├── firmware/             # verified Kick75 QMK source snapshot
-├── helpers/macos/        # Codex status and sidebar bridge source
-├── scripts/              # reproducible helper build scripts
-├── src/                  # existing customizer application
-└── tests/                # customizer parser tests
+├── helpers/macos/        # Codex status and sidebar bridge source and tests
+└── scripts/              # reproducible macOS helper build script
 ```
+
+## Verification commands
+
+```bash
+python3 -m unittest helpers.macos.tests.test_codex_status
+./scripts/build-macos-helpers.sh
+```
+
+Firmware target: `nuphy/kick75/ansi:via`.
 
 ## Safety and compatibility
 
 - This is an unofficial community project and is not affiliated with NuPhy or OpenAI.
 - The firmware target is **NuPhy Kick75 ANSI QMK/VIA** with USB IDs `19F5:32D5`.
-- Live status updates require wired USB. Normal keyboard input can continue to use the keyboard's supported connection modes.
 - Codex desktop shortcuts and local state formats can change. Each release records the tested behavior and source revision.
 - Never commit API keys, personal task databases, device identifiers, or machine-specific paths.
+- Do not flash firmware intended for a different Kick75 layout or model.
 
-## Project direction
+## Future work
 
-Stable behavior is recorded as a release before experimental work is added. Planned additions—including three manual Govee modes on Home, Page Up, and Page Down—remain in the [roadmap](docs/roadmap.md) until implemented and physically verified.
+Micro Parity v2 and all roadmap items are future work, not shipped functionality. Planned work enters the feature report and changelog only after separate approval, implementation, and verification. See the [roadmap](docs/roadmap.md).
 
 ## License and attribution
 

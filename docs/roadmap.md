@@ -26,6 +26,4 @@ Implementation stays blocked until the exact Govee models and supported scene ca
 
 - Portable installer with clear permission diagnostics
 - Compatibility matrix for additional Kick75 variants
-- Customizer app view that documents the installed Codex layer
 - Community-submitted scene and shortcut profiles
-
