@@ -17,6 +17,8 @@ The migrated `v1.0.0` release preserves the known-good public baseline:
 
 Live task-status delivery requires wired USB. Normal keyboard input remains available outside Codex mode through the keyboard's supported connection modes.
 
+The current firmware source matches the September 18, 2026 physically accepted keyboard source: its Codex-mode Delete-position key sends the private Govee Edge Sync toggle chord, while normal Delete and Fn+Insert remain available outside Codex mode. See the [firmware snapshot](firmware/README.md) for source hashes and rebuild evidence. The v1.0 release remains a separate historical baseline.
+
 Start with the [complete feature report](docs/codex-command-center.md) or the [recovery guide](docs/recovery.md). The verified source snapshot is under [firmware](firmware/README.md), the local status/sidebar bridge is under [helpers/macos](helpers/macos/README.md), and the repository split is documented in [migration provenance](docs/migration-provenance.md).
 
 ## Repository layout

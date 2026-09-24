@@ -309,6 +309,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
     }
 
+    // The physical key after F12 is matrix row 2, column 14. Keep its normal
+    // Delete/Insert behavior outside Codex mode, but bypass VIA's dynamic
+    // mapping while Codex is active so it always reaches Govee Edge Sync.
+    if (record->event.key.row == 2 && record->event.key.col == 14 &&
+        layer_state_is(CODEX_LAYER)) {
+        if (record->event.pressed) {
+            tap_code16(LCTL(LALT(LGUI(KC_F18))));
+        }
+        return false;
+    }
+
     return true;
 }
 
@@ -371,7 +382,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	_______,				_______,   	_______,   	_______,  	_______,   	_______,   	_______,	_______, 	_______,	_______,	_______,	_______,	_______,
 	_______,	_______,	_______,										_______, 							_______,	_______,			    _______,    _______,    _______),
 [CODEX_LAYER] = LAYOUT(
-    TG(CODEX_LAYER), KC_F1, KC_F2, KC_F3, KC_F4, LGUI(LSFT(KC_A)), LGUI(KC_N), LGUI(LALT(KC_P)), LGUI(KC_P), LCTL(LSFT(KC_G)), LCTL(LALT(LGUI(KC_P))), LGUI(LSFT(KC_B)), LGUI(LALT(KC_A)), _______,    TG(REASONING_LAYER),
+    TG(CODEX_LAYER), KC_F1, KC_F2, KC_F3, KC_F4, LGUI(LSFT(KC_A)), LGUI(KC_N), LGUI(LALT(KC_P)), LGUI(KC_P), LCTL(LSFT(KC_G)), LCTL(LALT(LGUI(KC_P))), LGUI(LALT(KC_S)), LGUI(LALT(KC_A)), _______,    TG(REASONING_LAYER),
     _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    
     _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    
     _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,                _______,

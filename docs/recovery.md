@@ -1,6 +1,6 @@
 # Recovery and Reinstall Guide
 
-This guide restores the verified v1.0 firmware and reconstructs the two macOS helpers.
+This guide restores the verified v1.0 firmware or rebuilds the September 18, 2026 physically accepted keyboard source, and reconstructs the two macOS helpers.
 
 ## Requirements
 
@@ -13,9 +13,9 @@ This guide restores the verified v1.0 firmware and reconstructs the two macOS he
 
 The v1.0 snapshot was built from upstream Git revision `9606f5a1fbc2cad0489f07eb336d4e317ee29ee4`.
 
-## Fastest recovery
+## Fastest v1.0 recovery
 
-Download `nuphy_kick75_ansi_via.bin` from this repository's v1.0 GitHub Release. Verify its SHA-256:
+Download `nuphy_kick75_ansi_via.bin` from this repository's v1.0 GitHub Release. This historical binary predates the Govee toggle. To reproduce the physically accepted September 18 keyboard, use the source rebuild below. Verify the v1.0 binary's SHA-256:
 
 ```text
 76be851d4081b369e2b0effea444061d51fe81f5c440f7a93189cc61b8c59c66
@@ -41,14 +41,14 @@ A successful flash ends with `File downloaded successfully` and a leave request.
 
 1. Clone the upstream QMK repository.
 2. Check out the recorded upstream revision.
-3. Replace `keyboards/nuphy/kick75/ansi/keymaps/via/keymap.c` with this repository's copy under `firmware/`.
+3. Copy both `keymap.c` and `rgb_matrix_user.inc` from this repository's `firmware/nuphy/kick75/ansi/keymaps/via/` to the same path in the QMK checkout.
 4. Build:
 
 ```bash
 qmk compile -kb nuphy/kick75/ansi -km via -e SKIP_GIT=yes
 ```
 
-5. Confirm the output is `.build/nuphy_kick75_ansi_via.bin`.
+5. Confirm the output is `.build/nuphy_kick75_ansi_via.bin`. The September 18 flashed binary SHA-256 was `fabe8ab1263de919295382f6fe260dac8c48de1ea18c318dbcbeea95a7a7ec64`. A September 24 rebuild from identical source compiled successfully but produced a different checksum; see [firmware rebuild evidence](../firmware/README.md).
 6. Run the 18 status tests from this repository:
 
 ```bash
